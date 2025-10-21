@@ -1,157 +1,340 @@
 import React, { useState } from "react";
-import { Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { router, Link } from "expo-router";
-import { MaterialCommunityIcons } from "@expo/vector-icons"; //es el acceso a la librería de los iconos de MaterialCommunityIcons
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-//Recursos
-// import logoApp from "../../../assets/images/logoApp.png";
-
-//Estilos
+// Estilos elegantes
 const styles = StyleSheet.create({
-    parrafo: {
-        color: '#000000ff',
-        fontSize: 16,
-        textAlign: 'center'
+    container: {
+        flex: 1,
+        backgroundColor: '#ffffff',
+    },
+    scrollContainer: {
+        flexGrow: 1,
+        paddingHorizontal: 25,
+        paddingVertical: 30,
+    },
+    logoContainer: {
+        alignItems: 'center',
+        marginBottom: 30,
+    },
+    logo: {
+        width: 100,
+        height: 100,
+        resizeMode: 'contain',
+        marginBottom: 20,
     },
     titulo: {
-        color: '#000000ff',
-        fontSize: 30,
+        color: '#2c3e50',
+        fontSize: 28,
         textAlign: 'center',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginBottom: 10,
+        letterSpacing: 0.5,
     },
     subtitulo: {
-        color: '#000000ff',
-        fontSize: 20,
-        textAlign: 'left',
-        fontWeight: 'bold'
-    },
-    botones: {
-        color: '#000000ff',
-        fontSize: 20,
+        color: '#2c3e50',
+        fontSize: 18,
         textAlign: 'center',
-        fontWeight: 'bold'
+        marginBottom: 30,
+        opacity: 0.8,
     },
-    smallButtons: {
-      color: '#0A91FF',
-      fontSize: 18,
-      textAlign: 'center',
-      fontWeight: 'bold'
+    socialButtonsContainer: {
+        marginBottom: 25,
     },
-    inputContainer:{ //estilo para posicionar tanto el contenedor para el usuario y pwd, tambien posiciona el icono de mostrar y ocultar el pwd a la derecha
-      flexDirection: 'row', //los elementos se alinean en una fila
-      alignItems: 'center',
-      width: '100%',
-      borderColor: '#777777ff',
-      borderWidth: 1,
-      borderRadius: 3,
-      marginBottom: 20,
-      paddingRight: 10 //es el espacio a la derecha del icono
+    socialButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 12,
+        borderRadius: 12,
+        paddingVertical: 14,
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: '#e0e0e0',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    facebookButton: {
+        borderColor: '#1877f2',
+        backgroundColor: '#1877f2',
+    },
+    googleButton: {
+        borderColor: '#4285f4',
+        backgroundColor: '#4285f4',
+    },
+    appleButton: {
+        borderColor: '#000000',
+        backgroundColor: '#000000',
+    },
+    socialButtonText: {
+        fontSize: 16,
+        fontWeight: '600',
+        marginLeft: 10,
+    },
+    facebookText: {
+        color: 'white',
+    },
+    googleText: {
+        color: 'white',
+    },
+    appleText: {
+        color: 'white',
+    },
+    socialIcon: {
+        width: 20,
+        height: 20,
+        resizeMode: 'contain',
+    },
+    separator: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 25,
+    },
+    separatorLine: {
+        flex: 1,
+        height: 1,
+        backgroundColor: '#e0e0e0',
+    },
+    separatorText: {
+        marginHorizontal: 15,
+        color: '#7f8c8d',
+        fontSize: 14,
+    },
+    inputLabel: {
+        color: '#2c3e50',
+        fontSize: 16,
+        fontWeight: '600',
+        marginBottom: 8,
+        marginLeft: 5,
+    },
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        borderColor: '#dce0e0',
+        borderWidth: 1.5,
+        borderRadius: 12,
+        marginBottom: 20,
+        paddingHorizontal: 15,
+        backgroundColor: 'rgba(248, 249, 250, 0.8)',
+        height: 56,
+    },
+    textInput: {
+        flex: 1,
+        fontSize: 16,
+        paddingVertical: 15,
+        color: '#2c3e50',
+    },
+    passwordIcon: {
+        padding: 5,
+    },
+    loginButton: {
+        backgroundColor: '#3498db',
+        borderRadius: 25,
+        paddingVertical: 16,
+        marginTop: 10,
+        marginBottom: 20,
+        shadowColor: '#3498db',
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.6,
+        shadowRadius: 15,
+        elevation: 10,
+        borderWidth: 1,
+        borderColor: '#2980b9',
+    },
+    loginButtonText: {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        letterSpacing: 1,
+    },
+    registerLink: {
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#3498db',
+        marginBottom: 15,
+    },
+    forgotPassword: {
+        textAlign: 'center',
+        fontSize: 14,
+        color: '#7f8c8d',
+        marginBottom: 20,
+    },
+    termsText: {
+        color: '#7f8c8d',
+        fontSize: 12,
+        textAlign: 'center',
+        lineHeight: 16,
+        marginBottom: 10,
     },
     msgError: {
-        color: '#ff0000',
-        fontSize: 16,
+        color: '#e74c3c',
+        fontSize: 14,
         textAlign: 'center',
-        marginTop: 16
-    }
-  })
-  
+        marginTop: 10,
+        marginBottom: 10,
+        paddingHorizontal: 20,
+    },
+});
+
 const LoginPage = () => {
     const [usuario, setUsuario] = useState<string>('');
     const [pwd, setPwd] = useState<string>('');
-    const [showpwd, setShowpwd] = useState(false); //Inicialmente, la contraseña está oculta (secureTextEntry: true), por eso `showPassword` es `false`
+    const [showpwd, setShowpwd] = useState(false);
     const [errorLogin, setErrorLogin] = useState('');
 
     const login = () => {
-        setErrorLogin(''); //carga como vacio
-        if(!usuario || !pwd) { //! es negación
+        setErrorLogin('');
+        if(!usuario || !pwd) {
            setErrorLogin('Por favor, ingresa tu usuario y contraseña para continuar.');
         } else {
             router.navigate('/(home)');
         }
     };
 
-    const toggleShowPassword = () => { //toggleShowPassword es alternar entre mostrar y ocultar contraseña
-      setShowpwd(!showpwd);//setShowpwd se encarga de asignar el valor que recibe a la variable showpwd
-      //!showpwd con ese signo de excalación se podrá invertir el valor de la variable a la que se le aplica
+    const toggleShowPassword = () => {
+      setShowpwd(!showpwd);
     };
 
-    return <View>
-      <Image
-        // source={logoApp}
-      />
-      <Text style={styles.titulo}>Unete a nosotros</Text>
-      <br></br>
-      <Button
-        title = "Iniciar sesión con Facebook"
-        onPress = {() => router.navigate('/(home)')}
-      />
-      <br></br>
-      <Button
-        title = "Iniciar sesión con Google"
-        onPress = {() => router.navigate('/(home)')}
-      />
-      <br></br>
-      <Button
-        title = "Iniciar sesión con Apple"
-        onPress = {() => router.navigate('/(home)')}
-      />
-      
-      <Text style={styles.subtitulo}>Usuario</Text>
-      <TextInput style={styles.inputContainer}
-        value = {usuario}
-        onChangeText = {(text: string) => setUsuario(text)} 
-        //onChangeText recibe el nuevo texto como argumento ( en este caso text) 
-        // y lo usa para actualizar el estado de la variable usuario mediante la función setUsuario, 
-        // que se define previamente con el hook useState
-      />
-      
-      <Text style={styles.subtitulo}>Contraseña</Text>
-      <TextInput style={styles.inputContainer}
-        value = {pwd}
-        onChangeText = {setPwd}
-        textContentType = "password" //propiedad opcional en iOS que ayuda al navegador a sugerir contraseñas guardadas para autocompletar
-        secureTextEntry={!showpwd} //secureTextEntry secureTextEntry.
-        // Si `showPassword` es `false` (contraseña oculta), `!showPassword` será `true`, ocultando el texto.
-        // Si `showPassword` es `true` (contraseña visible), `!showPassword` será `false`, mostrando el texto
+    const handleSocialLogin = (provider: string) => {
+        console.log(`Iniciando sesión con ${provider}`);
+        router.navigate('/(home)');
+    };
 
+    return (
+        <KeyboardAvoidingView 
+            style={styles.container}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+            <ScrollView 
+                contentContainerStyle={styles.scrollContainer}
+                showsVerticalScrollIndicator={false}
+            >
+                {/* Logo y título */}
+                <View style={styles.logoContainer}>
+                    <Image
+                        // source={require('../../../assets/images/logoApp.png')}
+                        style={styles.logo}
+                    />
+                    <Text style={styles.titulo}>Únete a nosotros</Text>
+                    <Text style={styles.subtitulo}>Comienza tu aventura</Text>
+                </View>
 
-        // secureTextEntry = {true} //Oculta la contraseña
-      />
-      <TouchableOpacity onPress={toggleShowPassword}>
-        <MaterialCommunityIcons
-          name={showpwd ? 'eye-off' : 'eye'}
-          //name se encarga de encontrar el icono que quieres usar, agregas el nombre de este aqui,
-          //luego showpwd es la condición, ? es que está preguntando por la condición,
-          //si la respuesta a esta condición es true, la contraseña es
-          size={16}
-          color="#999" 
-        />
-      </TouchableOpacity>
+                {/* Botones de redes sociales */}
+                <View style={styles.socialButtonsContainer}>
+                    <TouchableOpacity 
+                        style={[styles.socialButton, styles.facebookButton]}
+                        onPress={() => handleSocialLogin('Facebook')}
+                    >
+                        <Image
+                            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/124/124010.png' }}
+                            style={[styles.socialIcon, { tintColor: 'white' }]}
+                        />
+                        <Text style={[styles.socialButtonText, styles.facebookText]}>
+                            Iniciar sesión con Facebook
+                        </Text>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity 
+                        style={[styles.socialButton, styles.googleButton]}
+                        onPress={() => handleSocialLogin('Google')}
+                    >
+                        <Image
+                            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/300/300221.png' }}
+                            style={[styles.socialIcon, { tintColor: 'white' }]}
+                        />
+                        <Text style={[styles.socialButtonText, styles.googleText]}>
+                            Iniciar sesión con Google
+                        </Text>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity 
+                        style={[styles.socialButton, styles.appleButton]}
+                        onPress={() => handleSocialLogin('Apple')}
+                    >
+                        <Image
+                            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/0/747.png' }}
+                            style={[styles.socialIcon, { tintColor: 'white' }]}
+                        />
+                        <Text style={[styles.socialButtonText, styles.appleText]}>
+                            Iniciar sesión con Apple
+                        </Text>
+                    </TouchableOpacity>
+                </View>
 
-      <br></br>
-      <Button
-        title = "Iniciar sesión"
-        onPress = {() => login()} //Función cuando se hace clic en el botón y revisa que se cumpla lo indicado en login
-      />
-      {errorLogin=='error' && <Text style={styles.msgError}>
-        No se pudo iniciar sesión.
-      </Text> 
-      } 
+                {/* Separador */}
+                <View style={styles.separator}>
+                    <View style={styles.separatorLine} />
+                    <Text style={styles.separatorText}>o</Text>
+                    <View style={styles.separatorLine} />
+                </View>
 
-      <Link href="/(start)/login/register" style={styles.botones}>Crear cuenta</Link>
+                {/* Formulario de login */}
+                <Text style={styles.inputLabel}>Usuario o Email</Text>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.textInput}
+                        value={usuario}
+                        onChangeText={setUsuario}
+                        placeholder="Ingresa tu usuario o email"
+                        placeholderTextColor="#bdc3c7"
+                        autoCapitalize="none"
+                    />
+                </View>
 
-      <br></br>
+                <Text style={styles.inputLabel}>Contraseña</Text>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.textInput}
+                        value={pwd}
+                        onChangeText={setPwd}
+                        placeholder="Ingresa tu contraseña"
+                        placeholderTextColor="#bdc3c7"
+                        secureTextEntry={!showpwd}
+                        autoCapitalize="none"
+                    />
+                    <TouchableOpacity onPress={toggleShowPassword} style={styles.passwordIcon}>
+                        <MaterialCommunityIcons
+                            name={showpwd ? 'eye-off' : 'eye'}
+                            size={20}
+                            color="#7f8c8d"
+                        />
+                    </TouchableOpacity>
+                </View>
 
-      <Text style={styles.parrafo}>
-        Alregistrarse o iniciar sesión, acepto los Términos del Servicio XXX y la Política 
-        de Privacidad, confirmo que tengo 18 años de edad o más y acepto recibir comunicaciones 
-        por correo electrónico.
-      </Text>
-      <br></br>
-      <Link href="/(start)/login/forgot" style={styles.smallButtons}>¿Haz olvidado tu contraseña?</Link>
+                {/* Mensaje de error */}
+                {errorLogin ? <Text style={styles.msgError}>{errorLogin}</Text> : null}
 
-    </View>
+                {/* Botón de login */}
+                <TouchableOpacity style={styles.loginButton} onPress={login}>
+                    <Text style={styles.loginButtonText}>INICIAR SESIÓN</Text>
+                </TouchableOpacity>
 
+                {/* Enlaces */}
+                <Link href="/(start)/login/register" style={styles.registerLink}>
+                    ¿No tienes cuenta? Crear una ahora
+                </Link>
+
+                <Link href="/(start)/login/forgot" style={styles.forgotPassword}>
+                    ¿Olvidaste tu contraseña?
+                </Link>
+
+                {/* Términos y condiciones */}
+                <Text style={styles.termsText}>
+                    Al registrarte o iniciar sesión, aceptas los Términos del Servicio 
+                    y la Política de Privacidad de Destinapp. Confirmas que tienes 18 
+                    años de edad o más y aceptas recibir comunicaciones relacionadas 
+                    con tu cuenta.
+                </Text>
+            </ScrollView>
+        </KeyboardAvoidingView>
+    );
 }
 
 export default LoginPage;
