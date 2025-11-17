@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
+import { Button, StyleSheet, Text, View, ScrollView, TouchableOpacity, Pressable } from "react-native";
 import { router } from "expo-router";
 
 // Estilos mejorados
@@ -169,12 +169,12 @@ const WelcomePage = () => {
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity 
+                    <Pressable 
                         style={styles.elegantButton}
                         onPress={() => router.navigate('/login')}
                     >
                         <Text style={styles.buttonText}>COMENZAR</Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
             </ScrollView>
         </View>

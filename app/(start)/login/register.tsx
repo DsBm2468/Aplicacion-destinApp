@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, KeyboardAvoidingView, Platform, Pressable } from "react-native";
 import { router, Link } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -222,7 +222,7 @@ const RegisterPage = () => {
 
                 {/* Botones de redes sociales */}
                 <View style={styles.socialButtonsContainer}>
-                    <TouchableOpacity 
+                    <Pressable 
                         style={[styles.socialButton, styles.facebookButton]}
                         onPress={() => handleSocialRegister('Facebook')}
                     >
@@ -233,9 +233,9 @@ const RegisterPage = () => {
                         <Text style={[styles.socialButtonText, styles.facebookText]}>
                             Registrarse con Facebook
                         </Text>
-                    </TouchableOpacity>
+                    </Pressable>
                     
-                    <TouchableOpacity 
+                    <Pressable
                         style={[styles.socialButton, styles.googleButton]}
                         onPress={() => handleSocialRegister('Google')}
                     >
@@ -246,9 +246,9 @@ const RegisterPage = () => {
                         <Text style={[styles.socialButtonText, styles.googleText]}>
                             Registrarse con Google
                         </Text>
-                    </TouchableOpacity>
+                    </Pressable>
                     
-                    <TouchableOpacity 
+                    <Pressable 
                         style={[styles.socialButton, styles.appleButton]}
                         onPress={() => handleSocialRegister('Apple')}
                     >
@@ -259,7 +259,7 @@ const RegisterPage = () => {
                         <Text style={[styles.socialButtonText, styles.appleText]}>
                             Registrarse con Apple
                         </Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
 
                 {/* Separador */}
@@ -293,22 +293,22 @@ const RegisterPage = () => {
                         secureTextEntry={!showpwd}
                         autoCapitalize="none"
                     />
-                    <TouchableOpacity onPress={toggleShowPassword} style={styles.passwordIcon}>
+                    <Pressable onPress={toggleShowPassword} style={styles.passwordIcon}>
                         <MaterialCommunityIcons
                             name={showpwd ? 'eye-off' : 'eye'}
                             size={20}
                             color="#7f8c8d"
                         />
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
 
                 {/* Mensaje de error */}
                 {errorLogin ? <Text style={styles.msgError}>{errorLogin}</Text> : null}
 
                 {/* Botón de registro */}
-                <TouchableOpacity style={styles.registerButton} onPress={register}>
+                <Pressable style={styles.registerButton} onPress={register}>
                     <Text style={styles.registerButtonText}>CREAR CUENTA</Text>
-                </TouchableOpacity>
+                </Pressable>
 
                 {/* Enlace a login */}
                 <Link href="/(start)/login" style={styles.loginLink}>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, KeyboardAvoidingView, Platform, Pressable } from "react-native";
 import { router, Link } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -228,7 +228,7 @@ const LoginPage = () => {
 
                 {/* Botones de redes sociales */}
                 <View style={styles.socialButtonsContainer}>
-                    <TouchableOpacity 
+                    <Pressable 
                         style={[styles.socialButton, styles.facebookButton]}
                         onPress={() => handleSocialLogin('Facebook')}
                     >
@@ -239,9 +239,9 @@ const LoginPage = () => {
                         <Text style={[styles.socialButtonText, styles.facebookText]}>
                             Iniciar sesión con Facebook
                         </Text>
-                    </TouchableOpacity>
+                    </Pressable>
                     
-                    <TouchableOpacity 
+                    <Pressable
                         style={[styles.socialButton, styles.googleButton]}
                         onPress={() => handleSocialLogin('Google')}
                     >
@@ -252,9 +252,9 @@ const LoginPage = () => {
                         <Text style={[styles.socialButtonText, styles.googleText]}>
                             Iniciar sesión con Google
                         </Text>
-                    </TouchableOpacity>
+                    </Pressable>
                     
-                    <TouchableOpacity 
+                    <Pressable
                         style={[styles.socialButton, styles.appleButton]}
                         onPress={() => handleSocialLogin('Apple')}
                     >
@@ -265,7 +265,7 @@ const LoginPage = () => {
                         <Text style={[styles.socialButtonText, styles.appleText]}>
                             Iniciar sesión con Apple
                         </Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
 
                 {/* Separador */}
@@ -299,22 +299,22 @@ const LoginPage = () => {
                         secureTextEntry={!showpwd}
                         autoCapitalize="none"
                     />
-                    <TouchableOpacity onPress={toggleShowPassword} style={styles.passwordIcon}>
+                    <Pressable onPress={toggleShowPassword} style={styles.passwordIcon}>
                         <MaterialCommunityIcons
                             name={showpwd ? 'eye-off' : 'eye'}
                             size={20}
                             color="#7f8c8d"
                         />
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
 
                 {/* Mensaje de error */}
                 {errorLogin ? <Text style={styles.msgError}>{errorLogin}</Text> : null}
 
                 {/* Botón de login */}
-                <TouchableOpacity style={styles.loginButton} onPress={login}>
+                <Pressable style={styles.loginButton} onPress={login}>
                     <Text style={styles.loginButtonText}>INICIAR SESIÓN</Text>
-                </TouchableOpacity>
+                </Pressable>
 
                 {/* Enlaces */}
                 <Link href="/(start)/login/register" style={styles.registerLink}>
