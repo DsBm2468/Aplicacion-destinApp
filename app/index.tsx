@@ -1,5 +1,6 @@
 import { router } from "expo-router";
 import React from "react";
+<<<<<<< Updated upstream
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 // Estilos mejorados
@@ -25,6 +26,14 @@ const LoadingPage = () => {
             <Text style={styles.titulo}>CARGANDO...</Text>
         </TouchableOpacity>
     </View>
+=======
+import { Text, View } from "react-native";
+import WelcomePage from "./(start)/welcome";
+
+const LoadingPage = () => {
+    return <WelcomePage>
+    </WelcomePage>
+>>>>>>> Stashed changes
 }
 
 export default LoadingPage;
